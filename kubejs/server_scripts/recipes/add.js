@@ -66,6 +66,19 @@ const ores =[
   "tetrahedrite"
 ]
 
+const tfcgems =[
+   "topaz",
+   "sapphire",
+   "ruby",
+   "pyrite",
+   "opal",
+   "lapis_lazuli",
+   "emerald",
+   "amethyst",
+   "sylvite",
+   "saltpeter"
+]
+
 const natores =[
   "silver",
   "copper",
@@ -757,7 +770,6 @@ event.recipes.create.pressing("gtceu:wrought_iron_plate", ["#forge:ingots/wrough
   .itemOutputs(`16x tfc:pumpkin`, `16x tfc:pumpkin`, `32x tfc:seeds/pumpkin`, `32x tfc:seeds/pumpkin`)
   .duration(480)
   .EUt(HV)
-  .cleanroom(CleanroomType.CLEANROOM)
 
   event.recipes.gtceu
   .greenhouse(`gregitas:melon_boosted`)
@@ -768,7 +780,6 @@ event.recipes.create.pressing("gtceu:wrought_iron_plate", ["#forge:ingots/wrough
   .itemOutputs(`16x tfc:melon`, `16x tfc:melon`, `32x tfc:seeds/melon`, `32x tfc:seeds/melon`)
   .duration(480)
   .EUt(HV)
-  .cleanroom(CleanroomType.CLEANROOM)
   
   event.recipes.gtceu
   .greenhouse(`gregitas:papyrus_boosted`)
@@ -779,7 +790,6 @@ event.recipes.create.pressing("gtceu:wrought_iron_plate", ["#forge:ingots/wrough
   .itemOutputs(`16x tfc:papyrus`, `16x tfc:papyrus`, `32x tfc:seeds/papyrus`, `32x tfc:seeds/papyrus`)
   .duration(480)
   .EUt(HV)
-  .cleanroom(CleanroomType.CLEANROOM)
 
   event.recipes.gtceu
   .greenhouse(`gregitas:jute_boosted`)
@@ -790,7 +800,6 @@ event.recipes.create.pressing("gtceu:wrought_iron_plate", ["#forge:ingots/wrough
   .itemOutputs(`16x tfc:jute`, `16x tfc:jute`, `32x tfc:seeds/jute`, `32x tfc:seeds/jute`)
   .duration(480)
   .EUt(HV)
-  .cleanroom(CleanroomType.CLEANROOM)
 
 
   shaped('gtceu:treated_wood_planks', ['LL', 'LL'], {L: 'gregitas:creosote_treated_lumber'}).id('gregitas:shaped/treated_wood_planks')
@@ -2247,6 +2256,52 @@ event.recipes.gtceu.mixer('raw_thorium')
       .duration(40)
       .EUt(HV)
 
+    //tfc gem macerating
+
+        event.recipes.gtceu.macerator('gregitas:diamond_crushing')
+            .itemInputs('tfc:ore/diamond')
+            .itemOutputs('4x gtceu:diamond_dust')
+            .EUt(MV)
+            .duration(10)
+
+        event.recipes.gtceu.macerator('gregitas:sulfur_crushing')
+            .itemInputs('tfc:ore/sulfur')
+            .itemOutputs('4x gtceu:sulfur_dust')
+            .EUt(MV)
+            .duration(10)
+
+        event.recipes.gtceu.macerator('gregitas:cinnabar_crushing')
+            .itemInputs('tfc:ore/cinnabar')
+            .itemOutputs('8x minecraft:redstone')
+            .EUt(MV)
+            .duration(10)
+
+        event.recipes.gtceu.macerator('gregitas:cryolite_crushing')
+            .itemInputs('tfc:ore/cryolite')
+            .itemOutputs('8x minecraft:redstone')
+            .EUt(MV)
+            .duration(10)
+
+        event.recipes.gtceu.macerator('gregitas:borax_crushing')
+            .itemInputs('tfc:ore/borax')
+            .itemOutputs('6x tfc:powder/flux')
+            .EUt(MV)
+            .duration(10)
+
+        event.recipes.gtceu.macerator('gregitas:halite_crushing')
+            .itemInputs('tfc:ore/halite')
+            .itemOutputs('4x tfc:powder/salt')
+            .EUt(MV)
+            .duration(10)
+
+        tfcgems.forEach(tfcgems => {
+        event.recipes.gtceu.macerator(`gregitas:${tfcgems}_crushing`)
+            .itemInputs(`tfc:ore/${tfcgems}`)
+            .itemOutputs(`4x tfc:powder/${tfcgems}`)
+            .duration(10)
+            .EUt(MV)
+        })
+
   //create stones
 
   createstone.forEach((createstone) => {
@@ -2321,7 +2376,59 @@ event.recipes.gtceu.mixer('raw_thorium')
       .addCondition(RockBreakerCondition.INSTANCE)
     })
 
+  //gregtech circuits
 
+    event.recipes.gtceu.circuit_assembler('gregitas:quantum_mainframe_advanced')
+      .itemInputs('2x gtceu:hssg_frame')
+      .itemInputs('2x gtceu:quantum_processor_computer')
+      .itemInputs('6x gtceu:advanced_smd_inductor')
+      .itemInputs('12x gtceu:advanced_smd_capacitor')
+      .itemInputs('24x gtceu:ram_chip')
+      .itemInputs('24x gtceu:annealed_copper_double_wire')
+      .inputFluids(Fluid.of(`gtceu:tin`, 576))
+      .itemOutputs('gtceu:quantum_processor_mainframe')
+      .EUt(IV)
+      .duration(400)
+      .cleanroom(CleanroomType.CLEANROOM)
+
+    event.recipes.gtceu.circuit_assembler('gregitas:quantum_mainframe_advanced_solder')
+      .itemInputs('2x gtceu:hssg_frame')
+      .itemInputs('2x gtceu:quantum_processor_computer')
+      .itemInputs('6x gtceu:advanced_smd_inductor')
+      .itemInputs('12x gtceu:advanced_smd_capacitor')
+      .itemInputs('24x gtceu:ram_chip')
+      .itemInputs('24x gtceu:annealed_copper_double_wire')
+      .inputFluids(Fluid.of(`gtceu:soldering_alloy`, 288))
+      .itemOutputs('gtceu:quantum_processor_mainframe')
+      .EUt(IV)
+      .duration(400)
+      .cleanroom(CleanroomType.CLEANROOM)
+
+    event.recipes.gtceu.circuit_assembler('gregitas:quantum_mainframe')
+      .itemInputs('2x gtceu:hssg_frame')
+      .itemInputs('2x gtceu:quantum_processor_computer')
+      .itemInputs('24x gtceu:smd_inductor')
+      .itemInputs('48x gtceu:smd_capacitor')
+      .itemInputs('24x gtceu:ram_chip')
+      .itemInputs('24x gtceu:annealed_copper_double_wire')
+      .inputFluids(Fluid.of(`gtceu:tin`, 576))
+      .itemOutputs('gtceu:quantum_processor_mainframe')
+      .EUt(IV)
+      .duration(800)
+      .cleanroom(CleanroomType.CLEANROOM)
+
+    event.recipes.gtceu.circuit_assembler('gregitas:quantum_mainframe_solder')
+      .itemInputs('2x gtceu:hssg_frame')
+      .itemInputs('2x gtceu:quantum_processor_computer')
+      .itemInputs('24x gtceu:smd_inductor')
+      .itemInputs('48x gtceu:smd_capacitor')
+      .itemInputs('24x gtceu:ram_chip')
+      .itemInputs('24x gtceu:annealed_copper_double_wire')
+      .inputFluids(Fluid.of(`gtceu:soldering_alloy`, 288))
+      .itemOutputs('gtceu:quantum_processor_mainframe')
+      .EUt(IV)
+      .duration(800)
+      .cleanroom(CleanroomType.CLEANROOM)
 
 	//Liquid Chorus
 	
