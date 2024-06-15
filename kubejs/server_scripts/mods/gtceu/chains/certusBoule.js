@@ -47,7 +47,7 @@ let certusSemiconductors = (/** @type {Internal.RecipesEventJS} */ event) => {
     // CIRCUIT STUFF
     event.recipes.gtceu.chemical_vapor_deposition("certus_boule")
         .itemInputs('1x gtceu:silicon_wafer')
-        .inputFluids('gregitas_core:certane 16000')
+        .inputFluids('gregitas_core:certane 8000')
         .itemOutputs('1x gregitas:certus_boule')
         .EUt(MV).duration(1600)
 
